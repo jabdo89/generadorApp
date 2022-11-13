@@ -2,8 +2,6 @@ import React, { memo } from "react";
 import { StyleSheet } from "react-native";
 import useLayout from "hooks/useLayout";
 
-import HighchartsReactNative from "@highcharts/highcharts-react-native";
-
 import { dataChart } from "./data";
 
 const ChartLine = memo(() => {
@@ -104,16 +102,7 @@ const ChartLine = memo(() => {
     },
   };
 
-  return (
-    <>
-      <HighchartsReactNative
-        styles={styles.chart}
-        options={options}
-        useSSL
-        useCDN
-      />
-    </>
-  );
+  return <></>;
 });
 
 export default ChartLine;
