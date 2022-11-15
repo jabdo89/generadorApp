@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
   progressText: {
     fontSize: 32,
     lineHeight: 40,
-    fontFamily: "Overpass-Bold",
+    //fontFamily: "Overpass-Bold",
     color: "#F0DF67",
     alignSelf: "center",
   },

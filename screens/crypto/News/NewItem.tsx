@@ -68,7 +68,7 @@ const NewItem = memo(({ item, onPress }: NewItemItemProps) => {
           <Layout style={styles.icon}>
             <Icon pack="assets" name={item.icon} style={{}} />
           </Layout>
-          <Text category="subhead" fontFamily="Overpass-Bold">
+          <Text category="subhead">
             {item.coin}
           </Text>
         </LinearGradient>

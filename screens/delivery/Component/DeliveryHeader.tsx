@@ -56,7 +56,6 @@ const DeliveryHeader = memo(
                   <Text
                     category="caption2"
                     status={"white"}
-                    fontFamily={"Overpass-Bold"}
                   >
                     {shoppingCart}
                   </Text>
@@ -69,7 +68,6 @@ const DeliveryHeader = memo(
           category="title2"
           marginBottom={8}
           marginLeft={iconLeft ? 16 : 0}
-          fontFamily={bold ? "Overpass-Bold" : "Overpass-Regular"}
         >
           {title}
         </Text>

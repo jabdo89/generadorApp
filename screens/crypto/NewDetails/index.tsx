@@ -62,7 +62,6 @@ const NewDetails = memo(() => {
           category="title4"
           marginBottom={4}
           marginLeft={24}
-          fontFamily="Overpass-Bold"
         >
           About
         </Text>
@@ -75,7 +74,6 @@ const NewDetails = memo(() => {
           category="title4"
           marginLeft={24}
           marginBottom={16}
-          fontFamily="Overpass-Bold"
         >
           Other News
         </Text>

@@ -16,7 +16,6 @@ export default function useCachedResources() {
         await Font.loadAsync({
           ...FontAwesome.font,
           "Space-Mono": require("../assets/fonts/SpaceMono-Regular.ttf"),
-          "Overpass-Bold": require("../assets/fonts/Overpass-Bold.ttf"),
           "Overpass-Regular": require("../assets/fonts/Overpass-Regular.ttf"),
           "Montserrat-Regular": require("../assets/fonts/Montserrat-Regular.ttf"),
           "Roboto-BlackItalic": require("../assets/fonts/Roboto-BlackItalic.ttf"),

@@ -101,7 +101,6 @@ const themedStyles = StyleService.create({
   },
   reText: {
     fontSize: 32,
-    fontFamily: "Overpass-Bold",
     color: "#FFFFFF",
   },
   iconGrow: {
