@@ -19,8 +19,10 @@ import Text from "./components/Text";
 
 // patchFlatListProps();
 
-const jsonString = `[{"key":"k97LpZbdH","type":"button","config":{"x":187,"y":286,"height":61,"width":118},"title":"button"},{"key":"IlY_uCGBr","type":"text","config":{"x":192,"y":83,"height":56,"width":118},"title":"text"},{"key":"LbwAzulWq","type":"input","config":{"x":145,"y":150,"height":58,"width":200},"title":"input"},{"key":"yYfj2dlIN","type":"input","config":{"x":147,"y":220,"height":58,"width":200},"title":"input"}]`;
+const jsonString = `[{"key":"o4IJUpeWP","type":"text","config":{"x":130,"y":99,"height":50,"width":67},"title":"title","textType":"title1"},{"key":"PcNgbhgoE","type":"text","config":{"x":120,"y":152,"height":30,"width":88},"title":"subtitle","textType":"title2"},{"key":"7cwNkH4vP","type":"input","config":{"x":68,"y":189,"height":58,"width":200},"title":"input","color":"secondary"},{"key":"hbTRbrbyX","type":"input","config":{"x":69,"y":255,"height":58,"width":200},"title":"input","color":"secondary"},{"key":"Bd873NkwE","type":"button","config":{"x":128,"y":335,"height":30,"width":80},"title":"button","color":"primary"},{"key":"p7qfdWP5J","type":"text","config":{"x":119,"y":387,"height":30,"width":100},"title":"Random text","textType":"body"}]`;
 const json = JSON.parse(jsonString);
+
+const settings = {primary: {main: '#8fce00', contrast: '#000000'}, secondary: {main: '#3d85c6', contrast: '#e0effd'}};
 
 export default function App() {
   const [theme, setTheme] = React.useState<"light" | "dark">("dark");
@@ -60,7 +62,14 @@ export default function App() {
                 translucent={true}
                 backgroundColor={"#00000000"}
               />
-              {json.map((element: { key: string; type: string; config: { y: number ; x: number ; height: number; width: number; }; title: string; }) => {
+              {json.map((element: {
+                  textType: "body" | "h6" | "header" | "label" | "roboto" | "extra-1" | "extra-2" | "title1" | "title2" | "title3" | "title4" | "headline" | "call-out" | "subhead" | "footnote" | "caption1" | "caption2" | undefined;
+                  key: string;
+                  type: string;
+                  color: string | undefined;
+                  config: { y: number ; x: number ; height: number; width: number; };
+                  title: string;
+                }) => {
                 switch(element.type) {
                   case "button":
                     return (
@@ -70,13 +79,14 @@ export default function App() {
                         marginLeft: element.config.x,
                         height: element.config.height,
                         width: element.config.width,
+                        backgroundColor: element.color === "primary" ? settings.primary.main : settings.secondary.main
                       }}>
-                        <Text>{element.title}</Text>
+                        <Text style={{color: element.color === "primary" ? settings.primary.contrast : settings.secondary.contrast}}>{element.title}</Text>
                       </Button>
                     );
                   case "text":
                     return (
-                      <Text key={element.key} style={{position: "absolute", width: element.config.width, height: element.config.height}} marginLeft={element.config.x} marginTop={element.config.y} status="black">{element.title}</Text>
+                      <Text key={element.key} category={element.textType} style={{position: "absolute", width: element.config.width, height: element.config.height}} marginLeft={element.config.x} marginTop={element.config.y} status="black">{element.title}</Text>
                     );
                   default:
                     return (<Input key={element.key} placeholder={element.title} style={{
@@ -85,6 +95,8 @@ export default function App() {
                               marginLeft: element.config.x,
                               height: element.config.height,
                               width: element.config.width,
+                              backgroundColor: element.color === "primary" ? settings.primary.main : settings.secondary.main,
+                              color: element.color === "primary" ? settings.primary.contrast : settings.secondary.contrast
                             }}></Input>);
                 }
               })}
