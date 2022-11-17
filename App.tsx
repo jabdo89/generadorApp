@@ -22,7 +22,7 @@ import Text from "./components/Text";
 const jsonString = `[{"key":"o4IJUpeWP","type":"text","config":{"x":130,"y":99,"height":50,"width":67},"title":"title","textType":"title1"},{"key":"PcNgbhgoE","type":"text","config":{"x":120,"y":152,"height":30,"width":88},"title":"subtitle","textType":"title2"},{"key":"7cwNkH4vP","type":"input","config":{"x":68,"y":189,"height":58,"width":200},"title":"input","color":"secondary"},{"key":"hbTRbrbyX","type":"input","config":{"x":69,"y":255,"height":58,"width":200},"title":"input","color":"secondary"},{"key":"Bd873NkwE","type":"button","config":{"x":128,"y":335,"height":30,"width":80},"title":"button","color":"primary"},{"key":"p7qfdWP5J","type":"text","config":{"x":119,"y":387,"height":30,"width":100},"title":"Random text","textType":"body"}]`;
 const json = JSON.parse(jsonString);
 
-const settings = {primary: {main: '#8fce00', contrast: '#000000'}, secondary: {main: '#3d85c6', contrast: '#e0effd'}};
+const settings = {primary: {main: 'rgb(143,206,0)', contrast: 'rgb(0,0,0)'}, secondary: {main: 'rgb(61,133,198)', contrast: 'rgb(224,239,253)'}};
 
 export default function App() {
   const [theme, setTheme] = React.useState<"light" | "dark">("dark");
