@@ -23,6 +23,7 @@ import DisplayElements from "./DisplayElements";
 
 import json from './json';
 import { View } from "react-native";
+import { FlatList } from "react-native";
 
 const settings = {primary: {main: 'rgb(143,206,0)', contrast: 'rgb(0,0,0)'}, secondary: {main: 'rgb(61,133,198)', contrast: 'rgb(224,239,253)'}};
 
@@ -69,7 +70,7 @@ export default function App() {
               <View style={{position: "relative", backgroundColor: 'yellow'}}>
                 {Object.keys(json.main.components).map((key) => {
                   if(json.main.components[key].parentId === undefined) {
-                    return <DisplayElements key={key} component={json.main.components[key]} absolute />
+                    return <DisplayElements key={key} component={json.main.components[key]} absolute/>
                   }
                 })}
               </View>
