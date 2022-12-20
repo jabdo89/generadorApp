@@ -12,12 +12,11 @@ import IconElement from './elements/IconElement';
 export type Props = {
     component: ButtonType | InputType | TextType | IconType | ListType | LayoutType;
     absolute: Boolean;
-    isGrid: Boolean;
 };
 
 const settings = {primary: {main: 'rgb(143,206,0)', contrast: 'rgb(0,0,0)'}, secondary: {main: 'rgb(61,133,198)', contrast: 'rgb(224,239,253)'}};
 
-const DisplayElements: React.FC<Props> = ({component, absolute, isGrid}) => {
+const DisplayElements: React.FC<Props> = ({component, absolute}) => {
 
     console.log(component.type + " " + component.key + " " + component.config.height + " " + component.config.width);
 
@@ -44,7 +43,7 @@ const DisplayElements: React.FC<Props> = ({component, absolute, isGrid}) => {
         case "button":
             return <ButtonElement component={component} absolute={absolute}/>
         case "text":
-            return <TextElement component={component} absolute={absolute} isGrid={isGrid} />
+            return <TextElement component={component} absolute={absolute} />
         case "input":
             return <InputElement component={component} absolute={absolute} />
         case "list":
@@ -52,7 +51,7 @@ const DisplayElements: React.FC<Props> = ({component, absolute, isGrid}) => {
         case "icon":
             return <IconElement component={component} absolute={absolute} />
         case "layout":
-            return <LayoutElement component={component} absolute={absolute} isGrid={isGrid} />
+            return <LayoutElement component={component} absolute={absolute} />
     }
 
 }

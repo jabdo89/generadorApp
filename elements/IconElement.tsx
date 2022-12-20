@@ -1,7 +1,7 @@
 import { Button, Icon, Input } from '@ui-kitten/components';
 import Text from 'components/Text';
 import React from 'react';
-import { StyleProp, TextStyle, ViewStyle } from 'react-native';
+import { StyleProp, TextStyle, View, ViewStyle } from 'react-native';
 import { IconType } from '../types';
 
 export type Props = {
@@ -34,13 +34,12 @@ const IconElement: React.FC<Props> = ({component, absolute}) => {
 
     // styles.backgroundColor = component.color === "primary" ? settings.primary.main : settings.secondary.main;
     // styles.color = component.color === "primary" ? settings.primary.contrast : settings.secondary.contrast
-    return <Icon
-        style={styles}
-        fill='#8F9BB3'
-        pack="assets"
-        name={component.icon}
-    />
-
+    return <View style={{flexDirection:"row"}}><Icon
+            style={styles}
+            fill='#8F9BB3'
+            pack="assets"
+            name={component.icon}
+        /></View>
 }
 
 export default IconElement;
