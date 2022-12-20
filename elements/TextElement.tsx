@@ -7,11 +7,12 @@ import { TextType } from '../types';
 export type Props = {
     component: TextType;
     absolute: Boolean;
+    isGrid: Boolean;
 };
 
 const settings = {primary: {main: 'rgb(143,206,0)', contrast: 'rgb(0,0,0)'}, secondary: {main: 'rgb(61,133,198)', contrast: 'rgb(224,239,253)'}};
 
-const TextElement: React.FC<Props> = ({component, absolute}) => {
+const TextElement: React.FC<Props> = ({component, absolute, isGrid}) => {
 
     console.log("text " + absolute)
 
@@ -26,9 +27,9 @@ const TextElement: React.FC<Props> = ({component, absolute}) => {
     let styles: StyleProp<TextStyle> = {}
     let stylesView: StyleProp<ViewStyle> = {}
 
-    // if (isGrid === true) {
-    //     stylesView.flexGrow = 1;
-    // }
+    if (isGrid === true) {
+        stylesView.flexGrow = 1;
+    }
     stylesView.display = "flex";
     stylesView.alignItems = "center",
     stylesView.justifyContent = "center",
@@ -45,12 +46,14 @@ const TextElement: React.FC<Props> = ({component, absolute}) => {
 
     styles.textAlignVertical = "center";
 
-    return <Text
+    return <View style={stylesView}>
+        <Text 
         key={component.key}
         category={component.textType}
         style={styles}
         status="black"
         >{component.title}</Text>
+    </View>
 
 }
 
