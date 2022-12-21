@@ -61,18 +61,23 @@ const LayoutElement: React.FC<Props> = ({component, absolute, cols, rows, isGrid
     
     styles.flexWrap = "wrap";
     styles.alignItems = "center",
-    styles.justifyContent = "space-evenly",
+    styles.justifyContent = "center",
     styles.alignContent = "center"
 
     styles.height = component.config.height;
     styles.width = component.config.width;
-    styles.backgroundColor = component.backgroundColor === "primary" ? settings.primary.main : settings.secondary.main;
+    styles.backgroundColor = component.backgroundColor === "primary" ? settings.primary.main : component.backgroundColor === "secondary" ? settings.secondary.main : undefined;
 
-    if (isGrid === true) {
-        styles.flexGrow = 1;
-    }
+    // if (isGrid === true) {
+    //     styles.flexGrow = 1;
+    // }
 
     styles.backgroundColor = component.style?.backgroundColor ?? styles.backgroundColor;
+    styles.marginRight = component.style?.marginRight ?? styles.marginRight;
+    styles.marginLeft = component.style?.marginLeft ?? styles.marginLeft;
+    styles.marginTop = component.style?.marginTop ?? styles.marginTop;
+    styles.marginBottom = component.style?.marginBottom ?? styles.marginBottom;
+    styles.margin = component.style?.margin ?? styles.margin;
     return <View style={styles}>
         {Object.keys(json.main.components).map((key) => {
             if(json.main.components[key].parentId === component.key) {
