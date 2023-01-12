@@ -67,10 +67,8 @@ export default function App() {
                 />
               </SafeAreaView>
               <View style={{position: "relative", backgroundColor: 'yellow'}}>
-                {Object.keys(json.main.components).map((key) => {
-                  if(json.main.components[key].parentId === undefined) {
-                    return <DisplayElements key={key} component={json.main.components[key]} absolute />
-                  }
+                {json.main.components["parent"].children.map((key : string) => {
+                  return <DisplayElements key={key} component={json.main.components[key]} absolute isGrid={false}/>
                 })}
               </View>
             </SafeAreaProvider>

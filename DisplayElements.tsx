@@ -5,12 +5,13 @@ import InputElement from './elements/InputElement';
 import TextElement from './elements/TextElement';
 import React from 'react';
 import { StyleProp, View, ViewStyle } from 'react-native';
-import { ButtonType, InputType, TextType, IconType, ListType, LayoutType } from './types';
+import { ButtonType, InputType, TextType, IconType, ListType, LayoutType, ImageType } from './types';
 import LayoutElement from './elements/LayoutElement';
 import IconElement from './elements/IconElement';
+import ImageElement from './elements/ImageElement';
 
 export type Props = {
-    component: ButtonType | InputType | TextType | IconType | ListType | LayoutType;
+    component: ButtonType | InputType | TextType | IconType | ListType | LayoutType | ImageType;
     absolute: Boolean;
     isGrid: Boolean;
 };
@@ -19,6 +20,7 @@ const settings = {primary: {main: 'rgb(143,206,0)', contrast: 'rgb(0,0,0)'}, sec
 
 const DisplayElements: React.FC<Props> = ({component, absolute, isGrid}) => {
 
+    console.log(component)
     console.log(component.type + " " + component.key + " " + component.config.height + " " + component.config.width);
 
     const absoluteStyle = {
@@ -53,6 +55,8 @@ const DisplayElements: React.FC<Props> = ({component, absolute, isGrid}) => {
             return <IconElement component={component} absolute={absolute} />
         case "layout":
             return <LayoutElement component={component} absolute={absolute} isGrid={isGrid} />
+        case "image":
+            return <ImageElement component={component} />
     }
 
 }

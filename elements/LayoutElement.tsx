@@ -14,12 +14,9 @@ export type Props = {
     isGrid: Boolean | undefined;
 };
 
-
-
 const settings = {primary: {main: 'rgb(143,206,0)', contrast: 'rgb(0,0,0)'}, secondary: {main: 'rgb(61,133,198)', contrast: 'rgb(224,239,253)'}};
 
 const LayoutElement: React.FC<Props> = ({component, absolute, cols, rows, isGrid}) => {
-
 
     const absoluteStyle = {
         position: 'absolute',
@@ -44,6 +41,13 @@ const LayoutElement: React.FC<Props> = ({component, absolute, cols, rows, isGrid
         styles.position = "absolute";
         styles.marginTop = component.config.y;
         styles.marginLeft = component.config.x;
+    } else {
+        if(component.style?.marginLeft){
+            styles.marginLeft = parseInt(component.style?.marginLeft?.slice(0, -2) ?? "0") ?? styles.marginLeft;
+        }
+        if(component.style?.marginTop){
+            styles.marginTop = parseInt(component.style?.marginTop?.slice(0, -2) ?? "0") ?? styles.marginTop;
+        }
     }
 
     if (component.grid !== true) {
@@ -60,29 +64,46 @@ const LayoutElement: React.FC<Props> = ({component, absolute, cols, rows, isGrid
     styles.display = "flex";
     
     styles.flexWrap = "wrap";
-    styles.alignItems = "center",
-    styles.justifyContent = "center",
-    styles.alignContent = "center"
+    styles.alignItems = "center";
+    styles.justifyContent = "space-evenly";
+    styles.alignContent = "center";
 
     styles.height = component.config.height;
     styles.width = component.config.width;
     styles.backgroundColor = component.backgroundColor === "primary" ? settings.primary.main : component.backgroundColor === "secondary" ? settings.secondary.main : undefined;
 
-    // if (isGrid === true) {
-    //     styles.flexGrow = 1;
-    // }
-
+    if(component.style?.marginRight){
+        styles.marginRight = parseInt(component.style?.marginRight?.slice(0, -2) ?? "0") ?? styles.marginRight;
+    }
+    if(component.style?.marginBottom){
+        styles.marginBottom = parseInt(component.style?.marginBottom?.slice(0, -2) ?? "0") ?? styles.marginBottom;
+    }
+    if(component.style?.padding){
+        styles.padding = parseInt(component.style?.padding?.slice(0, -2) ?? "0") ?? styles.padding;
+    }
+    if(component.style?.paddingRight){
+        styles.paddingRight = parseInt(component.style?.paddingRight?.slice(0, -2) ?? "0") ?? styles.paddingRight;
+    }
+    if(component.style?.paddingLeft){
+        styles.paddingLeft = parseInt(component.style?.paddingLeft?.slice(0, -2) ?? "0") ?? styles.paddingLeft;
+    }
+    if(component.style?.paddingTop){
+        styles.paddingTop = parseInt(component.style?.paddingTop?.slice(0, -2) ?? "0") ?? styles.paddingTop;
+    }
+    if(component.style?.paddingBottom){
+        styles.paddingBottom = parseInt(component.style?.paddingBottom?.slice(0, -2) ?? "0") ?? styles.paddingBottom;
+    }
+    if(component.style?.borderRadius){
+        styles.borderRadius = parseInt(component.style?.borderRadius?.slice(0, -2) ?? "0") ?? styles.borderRadius;
+    }
     styles.backgroundColor = component.style?.backgroundColor ?? styles.backgroundColor;
-    styles.marginRight = component.style?.marginRight ?? styles.marginRight;
-    styles.marginLeft = component.style?.marginLeft ?? styles.marginLeft;
-    styles.marginTop = component.style?.marginTop ?? styles.marginTop;
-    styles.marginBottom = component.style?.marginBottom ?? styles.marginBottom;
-    styles.margin = component.style?.margin ?? styles.margin;
+    //styles.fontSize = component.style?.fontSize ?? styles.fontSize;
+    //styles.color = component.style?.color ?? styles.color;
+    styles.margin = parseInt(component.style?.margin?.slice(0, -2) ?? "0") ?? styles.margin;
+
     return <View style={styles}>
-        {Object.keys(json.main.components).map((key) => {
-            if(json.main.components[key].parentId === component.key) {
+        {component.children.map((key) => {
             return <DisplayElements key={key} component={json.main.components[key]} absolute={false} isGrid={true} />
-            }
         })}
     </View>
 

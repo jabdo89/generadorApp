@@ -1,47 +1,19 @@
-import { Button } from '@ui-kitten/components';
-import Text from 'components/Text';
 import React from 'react';
-import { StyleProp, TextStyle, View, ViewStyle } from 'react-native';
-import { TextType } from '../types';
+import { StyleProp, ImageStyle, Image } from 'react-native';
+import { ImageType } from '../types';
 
 export type Props = {
-    component: TextType;
-    absolute: Boolean;
-    isGrid: Boolean;
+    component: ImageType;
 };
 
 const settings = {primary: {main: 'rgb(143,206,0)', contrast: 'rgb(0,0,0)'}, secondary: {main: 'rgb(61,133,198)', contrast: 'rgb(224,239,253)'}};
 
-const TextElement: React.FC<Props> = ({component, absolute, isGrid}) => {
+const ImageElement: React.FC<Props> = ({component}) => {
 
-    console.log("text " + absolute)
-
-    const absoluteStyle = {
-        position: 'absolute',
-        marginTop: component.config.y,
-        marginLeft: component.config.x,
-        height: component.config.height,
-        width: component.config.width,
-    }
-
-    let styles: StyleProp<TextStyle> = {}
-    let stylesView: StyleProp<ViewStyle> = {}
-
-    stylesView.display = "flex";
-    stylesView.alignItems = "center",
-    stylesView.justifyContent = "center",
-    stylesView.alignContent = "center"
-
-    if(absolute === true) {
-        styles.position = "absolute";
-        styles.marginTop = component.config.y;
-        styles.marginLeft = component.config.x;
-    }
+    let styles: StyleProp<ImageStyle> = {}
 
     styles.height = component.config.height;
     styles.width = component.config.width;
-
-    styles.textAlignVertical = "center";
 
     if(component.style?.marginLeft){
         styles.marginLeft = parseInt(component.style?.marginLeft?.slice(0, -2) ?? "0") ?? styles.marginLeft;
@@ -77,17 +49,9 @@ const TextElement: React.FC<Props> = ({component, absolute, isGrid}) => {
     //styles.fontSize = component.style?.fontSize ?? styles.fontSize;
     //styles.color = component.style?.color ?? styles.color;
     styles.margin = parseInt(component.style?.margin?.slice(0, -2) ?? "0") ?? styles.margin;
-    
 
-    return <View style={stylesView}>
-        <Text 
-        key={component.key}
-        category={component.textType}
-        style={styles}
-        status="black"
-        >{component.title}</Text>
-    </View>
+    return <Image style={styles} source={{uri: component.url}} />
 
 }
 
-export default TextElement;
+export default ImageElement;

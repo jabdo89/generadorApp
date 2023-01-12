@@ -25,7 +25,7 @@ interface ButtonType {
     type: "button",
     config : Config,
     title: string,
-    color: string,
+    backgroundColor: string,
     key: string,
     parentId?: string,
     style?: CSSStyles,
@@ -83,6 +83,16 @@ interface LayoutType {
     parentId?: string,
     style?: CSSStyles,
     grid?: boolean,
+    children : Array<string>
 }
 
-export { ButtonType, InputType, TextType, ListType, IconType, LayoutType, CSSStyles, Config }
+interface ImageType {
+    type: "image",
+    config : Config,
+    key: string,
+    parentId?: string,
+    style?: CSSStyles,
+    url: string
+}
+
+export { ButtonType, InputType, TextType, ListType, IconType, LayoutType, CSSStyles, Config, ImageType }
