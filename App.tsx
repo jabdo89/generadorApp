@@ -40,6 +40,9 @@ export default function App() {
       setTheme(nextTheme);
     });
   };
+  
+  const [currentPage, setCurrentPage] = React.useState<string>(Object.keys(json)[0]);
+  
   const isLoadingComplete = useCachedResources();
   if (!isLoadingComplete) {
     return null;
@@ -67,8 +70,8 @@ export default function App() {
                 />
               </SafeAreaView>
               <View style={{position: "relative", backgroundColor: 'yellow'}}>
-                {json.main.components["parent"].children.map((key : string) => {
-                  return <DisplayElements key={key} component={json.main.components[key]} absolute isGrid={false}/>
+                {json[currentPage].components["parent"].children.map((key : string) => {
+                  return <DisplayElements key={key} component={json[currentPage].components[key]} setCurrentPage={setCurrentPage} absolute isGrid={false}/>
                 })}
               </View>
             </SafeAreaProvider>

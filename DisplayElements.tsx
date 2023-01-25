@@ -14,11 +14,12 @@ export type Props = {
     component: ButtonType | InputType | TextType | IconType | ListType | LayoutType | ImageType;
     absolute: Boolean;
     isGrid: Boolean;
+    setCurrentPage: Function;
 };
 
 const settings = {primary: {main: 'rgb(143,206,0)', contrast: 'rgb(0,0,0)'}, secondary: {main: 'rgb(61,133,198)', contrast: 'rgb(224,239,253)'}};
 
-const DisplayElements: React.FC<Props> = ({component, absolute, isGrid}) => {
+const DisplayElements: React.FC<Props> = ({component, absolute, isGrid, setCurrentPage}) => {
 
     console.log(component)
     console.log(component.type + " " + component.key + " " + component.config.height + " " + component.config.width);
@@ -44,7 +45,7 @@ const DisplayElements: React.FC<Props> = ({component, absolute, isGrid}) => {
 
     switch(component.type) {
         case "button":
-            return <ButtonElement component={component} absolute={absolute}/>
+            return <ButtonElement component={component} absolute={absolute} setCurrentPage={setCurrentPage}/>
         case "text":
             return <TextElement component={component} absolute={absolute} isGrid={isGrid} />
         case "input":

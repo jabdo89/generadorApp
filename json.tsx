@@ -8,14 +8,11 @@ const jsonString =  `
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
-console.log(windowHeight);
-console.log(windowWidth);
-
 const json = JSON.parse(jsonString)
 
+
+//Hacer esto para todas las paginas
 Object.keys(json.main.components).forEach(key => {
-    console.log(key);
-    console.log(json.main.components[key]);
     if(key !== "parent") {
         json.main.components[key].config.width = json.main.components[key].config.width / 290 * windowWidth;
         json.main.components[key].config.height = json.main.components[key].config.height / 595 * windowHeight;
