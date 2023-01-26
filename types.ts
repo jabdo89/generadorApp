@@ -29,6 +29,8 @@ interface ButtonType {
     key: string,
     parentId?: string,
     style?: CSSStyles,
+    actionType?: string,
+    navigate?: string,
 }
 
 interface InputType {
