@@ -10,19 +10,16 @@ const windowHeight = Dimensions.get('window').height;
 
 const json = JSON.parse(jsonString)
 
-
-//Hacer esto para todas las paginas
-
-
-
-/*Object.keys(json.main.components).forEach(key => {
-    if(key !== "parent") {
-        json.main.components[key].config.width = json.main.components[key].config.width / 290 * windowWidth;
-        json.main.components[key].config.height = json.main.components[key].config.height / 595 * windowHeight;
-
-        json.main.components[key].config.x = json.main.components[key].config.x / 290 * windowWidth;
-        json.main.components[key].config.y = json.main.components[key].config.y / 595 * windowHeight;
-    }
-});*/
+Object.keys(json).forEach(page => {
+    Object.keys(json[page].components).forEach(key => {
+        if(key !== "parent") {
+            json[page].components[key].config.width = json[page].components[key].config.width / 290 * windowWidth;
+            json[page].components[key].config.height = json[page].components[key].config.height / 595 * windowHeight;
+    
+            json[page].components[key].config.x = json[page].components[key].config.x / 290 * windowWidth;
+            json[page].components[key].config.y = json[page].components[key].config.y / 595 * windowHeight;
+        }
+    });
+});
 
 export default json;

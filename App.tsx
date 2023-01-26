@@ -47,11 +47,6 @@ export default function App() {
     setCurrentPage(page);
   }
   
-  console.log("app")
-  console.log(changeCurrentPage);
-  
-  React.useEffect(() => {console.log(changeCurrentPage); console.log("useEffect app")}, [changeCurrentPage])
-  
   const isLoadingComplete = useCachedResources();
   if (!isLoadingComplete) {
     return null;

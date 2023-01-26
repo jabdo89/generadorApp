@@ -71,16 +71,9 @@ const ButtonElement: React.FC<Props> = ({component, absolute, changeCurrentPage}
     //styles.color = component.style?.color ?? styles.color;
     styles.margin = parseInt(component.style?.margin?.slice(0, -2) ?? "0") ?? styles.margin;
     
-    console.log(component);
-    console.log(changeCurrentPage);
-    
-    React.useEffect(() => {console.log(changeCurrentPage); console.log("useEffect button")}, [changeCurrentPage])
-    
     const onClick = () => {
         if(component.actionType === "navigate") {
             changeCurrentPage(component.navigate);
-            console.log("go to " + component.navigate)
-            //set current page to component.navigate
         }
     }
 

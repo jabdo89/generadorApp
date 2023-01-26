@@ -23,12 +23,8 @@ const settings = {primary: {main: 'rgb(143,206,0)', contrast: 'rgb(0,0,0)'}, sec
 const DisplayElements: React.FC<Props> = ({component, absolute, isGrid, changeCurrentPage, currentPage}) => {
     
     
-    React.useEffect(() => {console.log(changeCurrentPage); console.log("useEffect")}, [changeCurrentPage])
-
     console.log(component)
     console.log(component.type + " " + component.key + " " + component.config.height + " " + component.config.width);
-    console.log("display")
-    console.log(changeCurrentPage);
 
     const absoluteStyle = {
         position: 'absolute',
