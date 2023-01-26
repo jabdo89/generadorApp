@@ -12,11 +12,13 @@ export type Props = {
     cols: number | undefined;
     rows: number | undefined;
     isGrid: Boolean | undefined;
+    currentPage: string;
+    changeCurrentPage: (page: string) => void;
 };
 
 const settings = {primary: {main: 'rgb(143,206,0)', contrast: 'rgb(0,0,0)'}, secondary: {main: 'rgb(61,133,198)', contrast: 'rgb(224,239,253)'}};
 
-const LayoutElement: React.FC<Props> = ({component, absolute, cols, rows, isGrid}) => {
+const LayoutElement: React.FC<Props> = ({component, absolute, cols, rows, isGrid, currentPage, changeCurrentPage}) => {
 
     const absoluteStyle = {
         position: 'absolute',
@@ -103,7 +105,7 @@ const LayoutElement: React.FC<Props> = ({component, absolute, cols, rows, isGrid
 
     return <View style={styles}>
         {component.children.map((key) => {
-            return <DisplayElements key={key} component={json.main.components[key]} absolute={false} isGrid={true} />
+            return <DisplayElements key={key} component={json[currentPage].components[key]} changeCurrentPage={changeCurrentPage} absolute={false} isGrid={true} currentPage={currentPage}/>
         })}
     </View>
 

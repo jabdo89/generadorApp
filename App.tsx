@@ -43,6 +43,15 @@ export default function App() {
   
   const [currentPage, setCurrentPage] = React.useState<string>(Object.keys(json)[0]);
   
+  const changeCurrentPage = (page: string) => {
+    setCurrentPage(page);
+  }
+  
+  console.log("app")
+  console.log(changeCurrentPage);
+  
+  React.useEffect(() => {console.log(changeCurrentPage); console.log("useEffect app")}, [changeCurrentPage])
+  
   const isLoadingComplete = useCachedResources();
   if (!isLoadingComplete) {
     return null;
@@ -71,7 +80,7 @@ export default function App() {
               </SafeAreaView>
               <View style={{position: "relative", backgroundColor: 'yellow'}}>
                 {json[currentPage].components["parent"].children.map((key : string) => {
-                  return <DisplayElements key={key} component={json[currentPage].components[key]} setCurrentPage={setCurrentPage} absolute isGrid={false}/>
+                  return <DisplayElements key={key} component={json[currentPage].components[key]} absolute isGrid={false} changeCurrentPage={changeCurrentPage} currentPage={currentPage}/>
                 })}
               </View>
             </SafeAreaProvider>

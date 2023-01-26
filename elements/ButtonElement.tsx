@@ -7,12 +7,12 @@ import { ButtonType } from '../types';
 export type Props = {
     component: ButtonType;
     absolute: Boolean;
-    setCurrentPage: Function;
+    changeCurrentPage: (page: string) => void;
 };
 
 const settings = {primary: {main: 'rgb(143,206,0)', contrast: 'rgb(0,0,0)'}, secondary: {main: 'rgb(61,133,198)', contrast: 'rgb(224,239,253)'}};
 
-const ButtonElement: React.FC<Props> = ({component, absolute, setCurrentPage}) => {
+const ButtonElement: React.FC<Props> = ({component, absolute, changeCurrentPage}) => {
 
 
     const absoluteStyle = {
@@ -71,9 +71,15 @@ const ButtonElement: React.FC<Props> = ({component, absolute, setCurrentPage}) =
     //styles.color = component.style?.color ?? styles.color;
     styles.margin = parseInt(component.style?.margin?.slice(0, -2) ?? "0") ?? styles.margin;
     
+    console.log(component);
+    console.log(changeCurrentPage);
+    
+    React.useEffect(() => {console.log(changeCurrentPage); console.log("useEffect button")}, [changeCurrentPage])
+    
     const onClick = () => {
         if(component.actionType === "navigate") {
-            setCurrentPage(component.navigate);
+            changeCurrentPage(component.navigate);
+            console.log("go to " + component.navigate)
             //set current page to component.navigate
         }
     }
@@ -81,7 +87,7 @@ const ButtonElement: React.FC<Props> = ({component, absolute, setCurrentPage}) =
     return <Button 
         key={component.key}
         activeOpacity={0.7}
-        onPress={() => onClick}
+        onPress={onClick}
         style={styles}
         >
         <Text style={{color: component.backgroundColor === "primary" ? settings.primary.contrast : settings.secondary.contrast}}>{component.title}</Text>

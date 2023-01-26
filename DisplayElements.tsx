@@ -14,15 +14,21 @@ export type Props = {
     component: ButtonType | InputType | TextType | IconType | ListType | LayoutType | ImageType;
     absolute: Boolean;
     isGrid: Boolean;
-    setCurrentPage: Function;
+    changeCurrentPage: (page: string) => void;
+    currentPage: string;
 };
 
 const settings = {primary: {main: 'rgb(143,206,0)', contrast: 'rgb(0,0,0)'}, secondary: {main: 'rgb(61,133,198)', contrast: 'rgb(224,239,253)'}};
 
-const DisplayElements: React.FC<Props> = ({component, absolute, isGrid, setCurrentPage}) => {
+const DisplayElements: React.FC<Props> = ({component, absolute, isGrid, changeCurrentPage, currentPage}) => {
+    
+    
+    React.useEffect(() => {console.log(changeCurrentPage); console.log("useEffect")}, [changeCurrentPage])
 
     console.log(component)
     console.log(component.type + " " + component.key + " " + component.config.height + " " + component.config.width);
+    console.log("display")
+    console.log(changeCurrentPage);
 
     const absoluteStyle = {
         position: 'absolute',
@@ -45,7 +51,7 @@ const DisplayElements: React.FC<Props> = ({component, absolute, isGrid, setCurre
 
     switch(component.type) {
         case "button":
-            return <ButtonElement component={component} absolute={absolute} setCurrentPage={setCurrentPage}/>
+            return <ButtonElement component={component} absolute={absolute} changeCurrentPage={changeCurrentPage}/>
         case "text":
             return <TextElement component={component} absolute={absolute} isGrid={isGrid} />
         case "input":
@@ -55,7 +61,7 @@ const DisplayElements: React.FC<Props> = ({component, absolute, isGrid, setCurre
         case "icon":
             return <IconElement component={component} absolute={absolute} />
         case "layout":
-            return <LayoutElement component={component} absolute={absolute} isGrid={isGrid} />
+            return <LayoutElement component={component} absolute={absolute} isGrid={isGrid} currentPage={currentPage} changeCurrentPage={changeCurrentPage} />
         case "image":
             return <ImageElement component={component} />
     }
