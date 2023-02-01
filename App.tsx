@@ -8,23 +8,38 @@ import * as eva from "@eva-design/eva";
 import { default as darkTheme } from "constants/theme/dark.json";
 import { default as lightTheme } from "constants/theme/light.json";
 import { default as customTheme } from "constants/theme/appTheme.json";
-import { ApplicationProvider, Button, IconRegistry, Input } from "@ui-kitten/components";
+import {
+  ApplicationProvider,
+  Button,
+  IconRegistry,
+  Input,
+} from "@ui-kitten/components";
 import { default as customMapping } from "./constants/theme/mapping.json";
 import { EvaIconsPack } from "@ui-kitten/eva-icons";
 import AssetIconsPack from "assets/AssetIconsPack";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import ThemeContext from "./ThemeContext";
 import Text from "./components/Text";
-import { ButtonType, IconType, InputType, LayoutType, ListType, TextType } from "types";
+import {
+  ButtonType,
+  IconType,
+  InputType,
+  LayoutType,
+  ListType,
+  TextType,
+} from "types";
 import DisplayElements from "./DisplayElements";
 // import { patchFlatListProps } from "react-native-web-refresh-control";
 
 // patchFlatListProps();
 
-import json from './json';
+import json from "./json";
 import { View } from "react-native";
 
-const settings = {primary: {main: 'rgb(143,206,0)', contrast: 'rgb(0,0,0)'}, secondary: {main: 'rgb(61,133,198)', contrast: 'rgb(224,239,253)'}};
+const settings = {
+  primary: { main: "rgb(143,206,0)", contrast: "rgb(0,0,0)" },
+  secondary: { main: "rgb(61,133,198)", contrast: "rgb(224,239,253)" },
+};
 
 export default function App() {
   const [theme, setTheme] = React.useState<"light" | "dark">("dark");
@@ -32,7 +47,7 @@ export default function App() {
     AsyncStorage.getItem("theme").then((value) => {
       if (value === "light" || value === "dark") setTheme(value);
     });
-    console.log(json)
+    console.log(json);
   }, []);
   const toggleTheme = () => {
     const nextTheme = theme === "light" ? "dark" : "light";
@@ -40,13 +55,15 @@ export default function App() {
       setTheme(nextTheme);
     });
   };
-  
-  const [currentPage, setCurrentPage] = React.useState<string>(Object.keys(json)[0]);
-  
+
+  const [currentPage, setCurrentPage] = React.useState<string>(
+    Object.keys(json)[0]
+  );
+
   const changeCurrentPage = (page: string) => {
     setCurrentPage(page);
-  }
-  
+  };
+
   const isLoadingComplete = useCachedResources();
   if (!isLoadingComplete) {
     return null;
@@ -66,17 +83,30 @@ export default function App() {
             customMapping={customMapping}
           >
             <SafeAreaProvider>
-              <SafeAreaView style={{position: "relative", backgroundColor: "black"}}>
+              <SafeAreaView
+                style={{ position: "relative", backgroundColor: "black" }}
+              >
                 <StatusBar
                   style={theme === "light" ? "dark" : "light"}
                   translucent={true}
                   backgroundColor={"#00000000"}
                 />
               </SafeAreaView>
-              <View style={{position: "relative", backgroundColor: 'yellow'}}>
-                {json[currentPage].components["parent"].children.map((key : string) => {
-                  return <DisplayElements key={key} component={json[currentPage].components[key]} absolute isGrid={false} changeCurrentPage={changeCurrentPage} currentPage={currentPage}/>
-                })}
+              <View style={{ position: "relative" }}>
+                {json[currentPage].components["parent"].children.map(
+                  (key: string) => {
+                    return (
+                      <DisplayElements
+                        key={key}
+                        component={json[currentPage].components[key]}
+                        absolute
+                        isGrid={false}
+                        changeCurrentPage={changeCurrentPage}
+                        currentPage={currentPage}
+                      />
+                    );
+                  }
+                )}
               </View>
             </SafeAreaProvider>
           </ApplicationProvider>

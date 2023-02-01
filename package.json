@@ -42,7 +42,7 @@
     "react-native-gesture-handler": "~2.5.0",
     "react-native-gifted-chat": "^0.16.3",
     "react-native-keyboard-aware-scroll-view": "^0.9.4",
-    "react-native-maps": "0.31.1",
+    "react-native-maps": "^1.4.0",
     "react-native-pager-view": "5.4.24",
     "react-native-reanimated": "~2.9.1",
     "react-native-reanimated-carousel": "3.0.3",

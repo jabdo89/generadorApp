@@ -1,15 +1,14 @@
-import { Button } from "@ui-kitten/components";
+import { Button, ViewPager } from "@ui-kitten/components";
 import Text from "components/Text";
 import DisplayElements from "../DisplayElements";
 import React from "react";
 import { StyleProp, View, ViewStyle } from "react-native";
-import { LayoutType } from "../types";
+import { CarouselType, LayoutType } from "../types";
 import json from "../json";
 
 export type Props = {
-  component: LayoutType;
+  component: CarouselType;
   absolute: Boolean;
-  isGrid: Boolean | undefined;
   currentPage: string;
   changeCurrentPage: (page: string) => void;
 };
@@ -19,21 +18,12 @@ const settings = {
   secondary: { main: "rgb(61,133,198)", contrast: "rgb(224,239,253)" },
 };
 
-const LayoutElement: React.FC<Props> = ({
+const CarouselElement: React.FC<Props> = ({
   component,
   absolute,
-  isGrid,
   currentPage,
   changeCurrentPage,
 }) => {
-  const absoluteStyle = {
-    position: "absolute",
-    marginTop: component.config.y,
-    marginLeft: component.config.x,
-    height: component.config.height,
-    width: component.config.width,
-  };
-
   let styles: StyleProp<ViewStyle> = {};
 
   if (absolute) {
@@ -53,24 +43,6 @@ const LayoutElement: React.FC<Props> = ({
     }
   }
 
-  if (component.grid !== true) {
-    if (component.cols === 0) {
-      styles.flexDirection = "row";
-    } else if (component.rows === 0) {
-      styles.flexDirection = "column";
-    }
-  } else {
-    //styles.flex = component.cols;
-    styles.flexDirection = "row";
-  }
-
-  styles.display = "flex";
-
-  styles.flexWrap = "wrap";
-  styles.alignItems = "center";
-  styles.justifyContent = "space-evenly";
-  styles.alignContent = "center";
-
   styles.height = component.config.height;
   styles.width = component.config.width;
   styles.backgroundColor =
@@ -79,6 +51,12 @@ const LayoutElement: React.FC<Props> = ({
       : component.backgroundColor === "secondary"
       ? settings.secondary.main
       : undefined;
+
+  styles.display = "flex";
+  styles.flexDirection = "row";
+  styles.alignItems = "center";
+  styles.alignContent = "center";
+  styles.justifyContent = "center";
 
   if (component.style?.marginRight) {
     styles.marginRight =
@@ -119,33 +97,45 @@ const LayoutElement: React.FC<Props> = ({
       parseInt(component.style?.borderRadius?.slice(0, -2) ?? "0") ??
       styles.borderRadius;
   }
-  console.log(component.key);
-  console.log(component.style);
-  console.log("in json " + component.style?.backgroundColor);
   styles.backgroundColor =
     component.style?.backgroundColor ?? styles.backgroundColor;
-  console.log("actual " + styles.backgroundColor);
   //styles.fontSize = component.style?.fontSize ?? styles.fontSize;
   //styles.color = component.style?.color ?? styles.color;
   styles.margin =
     parseInt(component.style?.margin?.slice(0, -2) ?? "0") ?? styles.margin;
 
+  const [selectedIndex, setSelectedIndex] = React.useState(0);
+
   return (
-    <View style={styles}>
+    <ViewPager
+      selectedIndex={selectedIndex}
+      onSelect={(index) => setSelectedIndex(index)}
+      style={styles}
+    >
       {component.children.map((key) => {
         return (
-          <DisplayElements
-            key={key}
-            component={json[currentPage].components[key]}
-            changeCurrentPage={changeCurrentPage}
-            absolute={false}
-            isGrid={true}
-            currentPage={currentPage}
-          />
+          <View
+            style={{
+              justifyContent: "center",
+              display: "flex",
+              alignContent: "center",
+              alignItems: "center",
+              alignSelf: "center",
+            }}
+          >
+            <DisplayElements
+              key={key}
+              component={json[currentPage].components[key]}
+              changeCurrentPage={changeCurrentPage}
+              absolute={false}
+              isGrid={true}
+              currentPage={currentPage}
+            />
+          </View>
         );
       })}
-    </View>
+    </ViewPager>
   );
 };
 
-export default LayoutElement;
+export default CarouselElement;

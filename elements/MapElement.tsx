@@ -1,17 +1,14 @@
 import { Button } from "@ui-kitten/components";
 import Text from "components/Text";
-import DisplayElements from "../DisplayElements";
 import React from "react";
-import { StyleProp, View, ViewStyle } from "react-native";
-import { LayoutType } from "../types";
-import json from "../json";
+import { StyleProp, TextStyle, View, ViewStyle } from "react-native";
+import { MapType } from "../types";
+import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
+import { Marker } from "react-native-maps";
 
 export type Props = {
-  component: LayoutType;
+  component: MapType;
   absolute: Boolean;
-  isGrid: Boolean | undefined;
-  currentPage: string;
-  changeCurrentPage: (page: string) => void;
 };
 
 const settings = {
@@ -19,13 +16,9 @@ const settings = {
   secondary: { main: "rgb(61,133,198)", contrast: "rgb(224,239,253)" },
 };
 
-const LayoutElement: React.FC<Props> = ({
-  component,
-  absolute,
-  isGrid,
-  currentPage,
-  changeCurrentPage,
-}) => {
+const MapElement: React.FC<Props> = ({ component, absolute }) => {
+  console.log("text " + absolute);
+
   const absoluteStyle = {
     position: "absolute",
     marginTop: component.config.y,
@@ -34,52 +27,35 @@ const LayoutElement: React.FC<Props> = ({
     width: component.config.width,
   };
 
-  let styles: StyleProp<ViewStyle> = {};
+  let styles: StyleProp<TextStyle> = {};
+  let stylesView: StyleProp<ViewStyle> = {};
 
-  if (absolute) {
+  stylesView.display = "flex";
+  (stylesView.alignItems = "center"),
+    (stylesView.justifyContent = "center"),
+    (stylesView.alignContent = "center");
+
+  if (absolute === true) {
     styles.position = "absolute";
     styles.marginTop = component.config.y;
     styles.marginLeft = component.config.x;
-  } else {
-    if (component.style?.marginLeft) {
-      styles.marginLeft =
-        parseInt(component.style?.marginLeft?.slice(0, -2) ?? "0") ??
-        styles.marginLeft;
-    }
-    if (component.style?.marginTop) {
-      styles.marginTop =
-        parseInt(component.style?.marginTop?.slice(0, -2) ?? "0") ??
-        styles.marginTop;
-    }
   }
-
-  if (component.grid !== true) {
-    if (component.cols === 0) {
-      styles.flexDirection = "row";
-    } else if (component.rows === 0) {
-      styles.flexDirection = "column";
-    }
-  } else {
-    //styles.flex = component.cols;
-    styles.flexDirection = "row";
-  }
-
-  styles.display = "flex";
-
-  styles.flexWrap = "wrap";
-  styles.alignItems = "center";
-  styles.justifyContent = "space-evenly";
-  styles.alignContent = "center";
 
   styles.height = component.config.height;
   styles.width = component.config.width;
-  styles.backgroundColor =
-    component.backgroundColor === "primary"
-      ? settings.primary.main
-      : component.backgroundColor === "secondary"
-      ? settings.secondary.main
-      : undefined;
 
+  styles.textAlignVertical = "center";
+
+  if (component.style?.marginLeft) {
+    styles.marginLeft =
+      parseInt(component.style?.marginLeft?.slice(0, -2) ?? "0") ??
+      styles.marginLeft;
+  }
+  if (component.style?.marginTop) {
+    styles.marginTop =
+      parseInt(component.style?.marginTop?.slice(0, -2) ?? "0") ??
+      styles.marginTop;
+  }
   if (component.style?.marginRight) {
     styles.marginRight =
       parseInt(component.style?.marginRight?.slice(0, -2) ?? "0") ??
@@ -119,33 +95,35 @@ const LayoutElement: React.FC<Props> = ({
       parseInt(component.style?.borderRadius?.slice(0, -2) ?? "0") ??
       styles.borderRadius;
   }
-  console.log(component.key);
-  console.log(component.style);
-  console.log("in json " + component.style?.backgroundColor);
   styles.backgroundColor =
     component.style?.backgroundColor ?? styles.backgroundColor;
-  console.log("actual " + styles.backgroundColor);
   //styles.fontSize = component.style?.fontSize ?? styles.fontSize;
   //styles.color = component.style?.color ?? styles.color;
   styles.margin =
     parseInt(component.style?.margin?.slice(0, -2) ?? "0") ?? styles.margin;
 
+  const refMap = React.useRef<MapView | null>(null);
+
   return (
-    <View style={styles}>
-      {component.children.map((key) => {
-        return (
-          <DisplayElements
-            key={key}
-            component={json[currentPage].components[key]}
-            changeCurrentPage={changeCurrentPage}
-            absolute={false}
-            isGrid={true}
-            currentPage={currentPage}
-          />
-        );
-      })}
-    </View>
+    <MapView
+      ref={refMap}
+      provider={PROVIDER_GOOGLE}
+      style={styles}
+      initialRegion={{
+        latitude: component.lat,
+        longitude: component.lng,
+        latitudeDelta: 3,
+        longitudeDelta: 3,
+      }}
+    >
+      {component.markers.map((marker, index) => (
+        <Marker
+          key={index}
+          coordinate={{ latitude: marker.lat, longitude: marker.lng }}
+        />
+      ))}
+    </MapView>
   );
 };
 
-export default LayoutElement;
+export default MapElement;

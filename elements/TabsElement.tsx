@@ -1,12 +1,15 @@
 import { Button } from "@ui-kitten/components";
 import Text from "components/Text";
+import DisplayElements from "../DisplayElements";
 import React from "react";
-import { StyleProp, ViewStyle } from "react-native";
-import { ButtonType } from "../types";
+import { ScrollView, StyleProp, View, ViewStyle } from "react-native";
+import { CarouselType, TabsType } from "../types";
+import json from "../json";
 
 export type Props = {
-  component: ButtonType;
+  component: TabsType | CarouselType;
   absolute: Boolean;
+  currentPage: string;
   changeCurrentPage: (page: string) => void;
 };
 
@@ -15,46 +18,48 @@ const settings = {
   secondary: { main: "rgb(61,133,198)", contrast: "rgb(224,239,253)" },
 };
 
-const ButtonElement: React.FC<Props> = ({
+const TabsElement: React.FC<Props> = ({
   component,
   absolute,
+  currentPage,
   changeCurrentPage,
 }) => {
-  const absoluteStyle = {
-    position: "absolute",
-    marginTop: component.config.y,
-    marginLeft: component.config.x,
-    height: component.config.height,
-    width: component.config.width,
-  };
-
   let styles: StyleProp<ViewStyle> = {};
 
   if (absolute) {
-    console.log("si****************");
     styles.position = "absolute";
     styles.marginTop = component.config.y;
     styles.marginLeft = component.config.x;
+  } else {
+    // if (component.style?.marginLeft) {
+    //   styles.marginLeft =
+    //     parseInt(component.style?.marginLeft?.slice(0, -2) ?? "0") ??
+    //     styles.marginLeft;
+    // }
+    // if (component.style?.marginTop) {
+    //   styles.marginTop =
+    //     parseInt(component.style?.marginTop?.slice(0, -2) ?? "0") ??
+    //     styles.marginTop;
+    // }
   }
+
+  styles.display = "flex";
+  styles.flexDirection = "row";
+
+  //styles.overflow = "scroll";
+
+  //   styles.justifyContent = "space-evenly";
+  //   styles.alignContent = "center";
 
   styles.height = component.config.height;
   styles.width = component.config.width;
-
   styles.backgroundColor =
     component.backgroundColor === "primary"
       ? settings.primary.main
-      : settings.secondary.main;
+      : component.backgroundColor === "secondary"
+      ? settings.secondary.main
+      : undefined;
 
-  //   if (component.style?.marginLeft) {
-  //     styles.marginLeft =
-  //       parseInt(component.style?.marginLeft?.slice(0, -2) ?? "0") ??
-  //       styles.marginLeft;
-  //   }
-  //   if (component.style?.marginTop) {
-  //     styles.marginTop =
-  //       parseInt(component.style?.marginTop?.slice(0, -2) ?? "0") ??
-  //       styles.marginTop;
-  //   }
   //   if (component.style?.marginRight) {
   //     styles.marginRight =
   //       parseInt(component.style?.marginRight?.slice(0, -2) ?? "0") ??
@@ -94,8 +99,6 @@ const ButtonElement: React.FC<Props> = ({
   //       parseInt(component.style?.borderRadius?.slice(0, -2) ?? "0") ??
   //       styles.borderRadius;
   //   }
-  styles.backgroundColor =
-    component.style?.backgroundColor ?? styles.backgroundColor;
   //styles.fontSize = component.style?.fontSize ?? styles.fontSize;
   //styles.color = component.style?.color ?? styles.color;
   //   if (component.style?.margin) {
@@ -103,31 +106,29 @@ const ButtonElement: React.FC<Props> = ({
   //       parseInt(component.style?.margin?.slice(0, -2) ?? "0") ?? styles.margin;
   //   }
 
-  const onClick = () => {
-    if (component.actionType === "navigate") {
-      changeCurrentPage(component.navigate!);
-    }
-  };
-
   return (
-    <Button
-      key={component.key}
-      activeOpacity={0.7}
-      onPress={onClick}
+    <ScrollView
       style={styles}
+      horizontal={true}
+      contentContainerStyle={{ alignItems: "center" }}
+      showsHorizontalScrollIndicator={false}
     >
-      <Text
-        style={{
-          color:
-            component.backgroundColor === "primary"
-              ? settings.primary.contrast
-              : settings.secondary.contrast,
-        }}
-      >
-        {component.title}
-      </Text>
-    </Button>
+      {component.children.map((key) => {
+        return (
+          <View style={{ margin: 5 }}>
+            <DisplayElements
+              key={key}
+              component={json[currentPage].components[key]}
+              changeCurrentPage={changeCurrentPage}
+              absolute={false}
+              isGrid={false}
+              currentPage={currentPage}
+            />
+          </View>
+        );
+      })}
+    </ScrollView>
   );
 };
 
-export default ButtonElement;
+export default TabsElement;
